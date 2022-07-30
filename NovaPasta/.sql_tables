@@ -1,0 +1,21 @@
+CREATE TABLE Pessoa
+(
+   Id int IDENTITY(1,1) NOT NULL,
+   Nome varchar (255) NOT NULL,
+   Cpf varchar (14) NOT NULL,
+   Rg varchar (9) NOT NULL,
+   DataNascimento date NOT NULL,
+   Naturalidade varchar (50) NOT NULL,
+   CONSTRAINT Pk_Pessoa PRIMARY KEY (Id)
+);
+
+
+
+CREATE TABLE Telefone
+(
+   Id_Telefone int IDENTITY(1,1) NOT NULL,
+   Id_Pessoa int NOT NULL,   
+   Numero varchar (11) NOT NULL,   
+   CONSTRAINT Pk_Telefone PRIMARY KEY (Id_Telefone),
+   CONSTRAINT Fk_Pessoa FOREIGN KEY (Id_Pessoa) REFERENCES Pessoa(Id),
+);
