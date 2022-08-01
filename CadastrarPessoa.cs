@@ -19,7 +19,7 @@ namespace AulasBanco
 
         }
 
-        public CadastrarPessoa(
+        public void CadastrarPessoaa(
         string nome,
         string cpf,
         string rg,
@@ -62,10 +62,11 @@ namespace AulasBanco
         string cpf,
         string rg,
         DateTime data_nascimento,
-        string naturalidade)
+        string naturalidade,
+        int opcaoUsuarioATT)
         {
             // comando sql
-            cmd.CommandText = @"update Pessoa set Nome = @nome, Cpf = @cpf, Rg = @rg, DataNascimento = @data_nascimento, Naturalidade = @naturalidade where Id = 2";
+            cmd.CommandText = @"update Pessoa set Nome = @nome, Cpf = @cpf, Rg = @rg, DataNascimento = @data_nascimento, Naturalidade = @naturalidade where Id = @opcaoUsuarioATT";
             //cmd.CommandText = @"UPDATE Pessoa SET Nome = @nome, Cpf = @cpf, Naturalidade = @naturalidade, DataNascimento = @data_nascimento, Naturalidade = @naturalidade where id = 2";
 
 
@@ -78,6 +79,7 @@ namespace AulasBanco
                 cmd.Parameters.AddWithValue("@rg", rg);
                 cmd.Parameters.AddWithValue("@data_nascimento", data_nascimento);
                 cmd.Parameters.AddWithValue("@naturalidade", naturalidade);
+                cmd.Parameters.AddWithValue("@opcaoUsuarioATT", opcaoUsuarioATT);
 
                 //conectar com banco
                 try
@@ -129,6 +131,11 @@ namespace AulasBanco
                 foreach (Pessoa p in pessoas)
                 {
                     Console.WriteLine("========Inicio========");
+                    Console.Write("ID: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(p.Id);
+                    Console.ForegroundColor = ConsoleColor.White;
+
                     Console.WriteLine("Nome: " + p.Nome);
                     Console.WriteLine("CPF: " + p.Cpf);
                     Console.WriteLine("Rg: " + p.Rg);
@@ -144,7 +151,7 @@ namespace AulasBanco
         }
 
 
-        public void SelecionarPessoa()
+        public void SelecionarPessoa(string letrasPesquisa)
         {
             SqlCommand cmd = new SqlCommand();
             String mensagem = "";
@@ -154,7 +161,7 @@ namespace AulasBanco
             try
             {
                 SqlDataReader resultado;
-                var query = @"SELECT Id, Nome, Cpf, Rg, DataNascimento, Naturalidade FROM Pessoa WHERE nome LIKE '%ui%'";
+                var query = @$"SELECT Id, Nome, Cpf, Rg, DataNascimento, Naturalidade FROM Pessoa WHERE nome LIKE '%{letrasPesquisa}%'";
                 using (var sql = new SqlConnection(connection))
                 {
                     SqlCommand command = new SqlCommand(query, sql);
