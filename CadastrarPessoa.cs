@@ -196,6 +196,59 @@ namespace AulasBanco
             }
         }
 
+        public bool SelecionarPessoaID(int IDPesquisa)
+        {
+            SqlCommand cmd = new SqlCommand();
+            String mensagem = "";
+            string connection = @"Data Source=ITELABD13\SQLEXPRESS;Initial Catalog=BancoAula2;Integrated Security=True";
+            bool existeIDQuery = false;
+
+            List<Pessoa> pessoas = new List<Pessoa>();
+            try
+            {
+                SqlDataReader resultado;
+                var query = @$"SELECT Id, Nome, Cpf, Rg, DataNascimento, Naturalidade FROM Pessoa WHERE ID LIKE '%{IDPesquisa}%'";
+                
+                using (var sql = new SqlConnection(connection))
+                {
+                    SqlCommand command = new SqlCommand(query, sql);
+                    command.Connection.Open();
+                    resultado = command.ExecuteReader();
+
+                    while (resultado.Read())
+                    {
+                        pessoas.Add(new Pessoa(resultado.GetInt32(resultado.GetOrdinal("Id")),
+                                               resultado.GetString(resultado.GetOrdinal("Nome")),
+                                               resultado.GetString(resultado.GetOrdinal("Cpf")),
+                                               resultado.GetString(resultado.GetOrdinal("Rg")),
+                                               resultado.GetDateTime(resultado.GetOrdinal("DataNascimento")),
+                                               resultado.GetString(resultado.GetOrdinal("Naturalidade"))));
+                        existeIDQuery = true;
+                    }
+                }
+                if (existeIDQuery == true)
+                {                    
+                    Console.WriteLine("========EXISTE O USUARIO========");
+                    foreach (Pessoa p in pessoas)
+                    {
+                        Console.WriteLine("========Inicio========");
+                        Console.WriteLine("Nome: " + p.Nome);
+                        Console.WriteLine("CPF: " + p.Cpf);
+                        Console.WriteLine("Rg: " + p.Rg);
+                        Console.WriteLine("Naturalidade: " + p.Naturalidade);
+                        Console.WriteLine("Data de Nascimento: " + p.DataNascimento);
+                        Console.WriteLine("========Fim========");
+                    }
+                }
+                else { Console.WriteLine("========NÃO EXISTE O USUÁRIO========"); }
+            }
+            catch (Exception)
+            {
+                mensagem = "Erro!";
+            }
+            return existeIDQuery;
+        }
+
         public void DeletarPessoa()
         {
             SqlCommand cmd = new SqlCommand();
@@ -221,6 +274,8 @@ namespace AulasBanco
                 mensagem = "Erro!";
             }
         }
+
+
 
 
 

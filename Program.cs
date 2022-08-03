@@ -28,6 +28,7 @@ namespace AulasBanco
 
             //variaveis para uso diverso
             int opcaoUsuario = 0;
+            int opcaoTelefone = 0;
             String mensagem = ""; //A MENSAGEM DE ERRO POR PADRÃO DEVE VIR VAZIA NÃO NULLA 
 
 
@@ -42,13 +43,14 @@ namespace AulasBanco
             Console.WriteLine("\t 3 - atualizar ");
             Console.WriteLine("\t 4 - procurar ");
             Console.WriteLine("\t 5 - deletar ");
-            Console.WriteLine("\t 6 - sair do sistema ");
+            Console.WriteLine("\t 6 - Opções de telefone ");
+            Console.WriteLine("\t 7 - sair do sistema ");
 
             Console.WriteLine("Sua opção? ");
             opcaoUsuario = Convert.ToInt32(Console.ReadLine());
 
 
-            while (opcaoUsuario != 6)
+            while (opcaoUsuario != 7)
             {
                 if (opcaoUsuario == 1)
                 {
@@ -66,7 +68,7 @@ namespace AulasBanco
 
                     //cadastrar
                     CadastrarPessoa cadastrar = new CadastrarPessoa();
-                    cadastrar.CadastrarPessoaa(nome, cpf, rg, data_nascimento, naturalidade);                  
+                    cadastrar.CadastrarPessoaa(nome, cpf, rg, data_nascimento, naturalidade);
                 }
 
                 if (opcaoUsuario == 2)
@@ -115,6 +117,35 @@ namespace AulasBanco
                     deletar.DeletarPessoa();
                 }
 
+                if (opcaoUsuario == 6)
+                {
+
+                    //OPÇÕES TELEFONE
+                    Console.WriteLine("Escolha uma das opções: ");
+                    Console.WriteLine("\t 1 - cadastrar ");
+                    Console.WriteLine("\t 2 - sair da opções de telefones ");
+
+                    Console.WriteLine("Sua opção? ");
+                    opcaoTelefone = Convert.ToInt32(Console.ReadLine());
+
+                    while (opcaoTelefone != 2)
+                    {
+                        if (opcaoTelefone == 1)
+                        {
+                            //cadastrar numero
+                            CadastrarTelefone adicionarTelefone = new CadastrarTelefone();
+                            adicionarTelefone.AdicionarTelefone();
+                        }
+                        Console.WriteLine("Escolha uma das opções: ");
+                        Console.WriteLine("\t 1 - cadastrar ");
+                        Console.WriteLine("\t 2 - sair da opções de telefones ");
+
+                        Console.WriteLine("Sua opção? ");
+                        opcaoTelefone = Convert.ToInt32(Console.ReadLine());
+                    }
+
+                }
+
                 Console.WriteLine("Escolha uma das opções: ");
                 Console.WriteLine("\t 1 - cadastrar ");
                 Console.WriteLine("\t 2 - listar ");
@@ -141,14 +172,9 @@ namespace AulasBanco
 
 
 
-            Console.WriteLine("digite o id_Pessoa :   ");
-            id_Pessoa = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("digite o numero : ");
-            numero = Convert.ToString(Console.ReadLine());
 
-            //cadastrar numero
-            CadastrarTelefone adicionarTelefone = new CadastrarTelefone();
-            adicionarTelefone.AdicionarTelefone(id_Pessoa, numero);
+
+
 
 
         }
